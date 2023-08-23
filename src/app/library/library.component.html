@@ -1,0 +1,160 @@
+<section class="bg-color">
+  <div class="container">
+    
+    <div class="title">
+
+      <h1>
+        <img src="assets/library.png" alt="Icon" class="icon">
+        KÜTÜPHANE
+
+      </h1>
+
+
+    </div>
+
+  </div>
+
+</section>
+<div>
+  <br />
+  <dx-button style="text-align: right; margin-right: 30px;" icon="inserttable" class="btn-light button-add mt-1" (click)="navigateAction()" hint="Yeni Kitap Ekle"></dx-button>
+</div>
+<div class="container d-flex justify-content-center mt-50 mb-50">
+
+
+  <div class="row card-container">
+    <div *ngFor="let i of loopVal">
+      <div class="col-md-4 mt-2">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-img-actions">
+              <img src="{{imageData[i]}}" class="card-img img-fluid" width="96" height="350" alt="">
+            </div>
+            <div *ngIf="borrowVisible[i]==true">
+              <br /> <br /><br />
+            </div>
+
+            <div class="card-footer bg-light text-center">
+              <h3 class="mb-0 font-weight-semibold">{{bookName[i]}}</h3>
+              <h5 class="mb-0 font-weight-semibold">{{authorsName[i]}}</h5>
+
+
+              <h4 class="mb-0 font-weight-semibold" [class.text-green]="!borrowVisible[i]" [class.text-red]="borrowVisible[i]">{{borrowedMessage[i]}}</h4>
+
+
+              
+              <div *ngIf="borrowVisible[i]==false">
+                <br /> <br />
+                <dx-button (onClick)="detail(i)"> Ödünç Al</dx-button>
+
+
+              </div>
+            </div>
+
+          </div>
+          <div *ngIf="borrowVisible[i]==true" style="text-align:left;margin-left:30px">
+            Ödünç Alan Kişi: {{borrowerUser[i]}}
+            <br /> <br />
+            Teslim tarihi: {{deliveryDate[i]}}
+            <br /> <br /><br />
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<dx-popup width="550"
+          height="600"
+          [showTitle]="true"
+          [title]="borrowedText"
+          [dragEnabled]="false"
+          [closeOnOutsideClick]="false"
+          [showCloseButton]="true"
+          [(visible)]="popupImportVisible">
+  <dx-scroll-view width="100%" height="100%">
+    <dxo-position at="center"
+                  my="center">
+    </dxo-position>
+
+    <div class="card-img-actions" style="text-align: center;">
+      <img src="{{imageData[index]}}" class="card-img img-fluid" width="96" height="350" alt="">
+    </div>
+
+    <div class="dx-fieldset" id="notes-container">
+
+      <div style="display: inline-flex ;max-height: 40px;height: 40%">
+        <div class="dx-field" style="width:440px; height:42px">
+          <div class="dx-field-label" style="width:160px;height:40px ">Kitap Adı</div>
+          <div class="dx-field-value" style="width:210px;height:40px">
+            <dx-text-area [(value)]="bookName[index]" style="height:40px;width:210px;" [readOnly]="true">
+
+            </dx-text-area>
+          </div>
+        </div>
+      </div>
+      <div style="display: inline-flex ;max-height: 40px;height: 40%">
+        <div class="dx-field" style="width:440px; height:42px">
+          <div class="dx-field-label" style="width:160px;height:40px ">Yazar Adı</div>
+          <div class="dx-field-value" style="width:210px;height:40px">
+            <dx-text-area [(value)]="authorsName[index]" style="height:40px;width:210px;" [readOnly]="true">
+              <dx-validator>
+                <dxi-validation-rule type="required"
+                                     message="Lütfen Yazar Adını doldurun">
+                </dxi-validation-rule>
+              </dx-validator>
+
+
+            </dx-text-area>
+          </div>
+        </div>
+      </div>
+      <div style="display: inline-flex ;max-height: 40px;height: 40%">
+        <div class="dx-field" style="width:440px; height:42px">
+          <div class="dx-field-label" style="width:160px;height:40px ">Ödünç Alan Kişinin Adı</div>
+          <div class="dx-field-value" style="width:210px;height:40px">
+            <dx-text-area [(value)]="borrowerUser[index]" style="height:40px;width:210px;">
+
+              <dx-validator>
+                <dxi-validation-rule type="required"
+                                     message="Lütfen Ödünç Alan Kişinin Adını doldurun">
+                </dxi-validation-rule>
+              </dx-validator>
+            </dx-text-area>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: inline-flex ;max-height: 40px;height: 40%">
+        <div class="dx-field" style="width:440px; height:42px">
+          <div class="dx-field-label" style="width:160px;height:40px ">Teslim Tarihi</div>
+          <div class="dx-field-value" style="width:210px;height:40px">
+            <dx-date-box style="height:40px;width:210px;"
+                         class="dxSelect"
+                         displayFormat="dd/MM/yyyy"
+                         applyValueMode="instantly"
+                         [(value)]="valueStart"
+                         [min]="min"
+                         [max]="now">
+            </dx-date-box>
+          </div>
+        </div>
+      </div>
+      <br /><br />
+     
+      <div style="text-align: center;">
+
+        <dx-button (onClick)="updateStatusData(index,borrowerUser[index],valueStart)"> Ödünç Al</dx-button>
+
+      </div>
+    </div>
+
+
+
+
+</dx-scroll-view>
+</dx-popup>

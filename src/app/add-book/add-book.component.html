@@ -1,0 +1,96 @@
+<div class="bg-color containers" id="notes-container" style="width: 80%; height: 80vh;">
+  <section class="bg-color">
+    <div class="container">
+
+      <div class="title" style="text-align:center">
+
+        <h1>
+          KÜTÜPHANE
+
+        </h1>
+
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <div class="dx-fieldset" id="notes-container">
+    <dx-form style="width:100%;"
+             searchEnabled=true;
+             [(formData)]="libraryTable"
+             method="post"
+             [showColonAfterLabel]="true"
+             [showValidationSummary]="true">
+
+
+
+
+
+
+
+
+      <div class="card-img-actions" style="text-align: center;">
+        <img *ngIf="selectedImage" [src]="selectedImage" alt="Chosen Image" style="width: 200px; height: auto;">
+      </div>
+
+      <br /><br />
+
+      <div style="display: inline-flex; max-height: 40px; height: 40%;">
+        <div class="dx-field" style="width: 440px; height: 42px;">
+          <div class="dx-field-label" style="width: 160px; height: 40px;">Kitap Adı</div>
+          <div class="dx-field-value" style="width: 210px; height: 40px; display: flex; align-items: center; border: 1px solid #ccc; padding: 4px;">
+
+            <input style="width: 100%;" class="form-control" type="file" (change)="onFileSelected($event)">
+            <dx-validator>
+              <dxi-validation-rule type="required"
+                                   message="Lütfen dosya seçin">
+              </dxi-validation-rule>
+            </dx-validator>
+
+          </div>
+        </div>
+      </div>
+
+      <br />  <div style="display: inline-flex ;max-height: 40px;height: 40%">
+        <div class="dx-field" style="width:440px; height:42px">
+          <div class="dx-field-label" style="width:160px;height:40px ">Kitap Adı</div>
+          <div class="dx-field-value" style="width:210px;height:40px">
+            <dx-text-area style="height:40px;width:210px;" [(value)]="bookNameToAdd">
+              <dx-validator>
+                <dxi-validation-rule type="required"
+                                     message="Lütfen bu alanı doldurun">
+                </dxi-validation-rule>
+              </dx-validator>
+
+            </dx-text-area>
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <div style="display: inline-flex ;max-height: 40px;height: 40%">
+        <div class="dx-field" style="width:440px; height:42px">
+          <div class="dx-field-label" style="width:160px;height:40px ">Yazar Adı</div>
+          <div class="dx-field-value" style="width:210px;height:40px">
+            <dx-text-area style="height:40px;width:210px;" [(value)]="authorsNameToAdd">
+
+              <dx-validator>
+                <dxi-validation-rule type="required"
+                                     message="Lütfen bu alanı doldurun ">
+                </dxi-validation-rule>
+              </dx-validator>
+            </dx-text-area>
+          </div>
+        </div>
+      </div>
+
+      <br /><br />
+    </dx-form>
+    <div style="text-align: center;">
+      <dx-button (click)="onUpload(bookNameToAdd,authorsNameToAdd)"> Kitap Ekle</dx-button>
+
+    </div>
+  </div>
+</div>
